@@ -1,70 +1,65 @@
-#include<bits/stdc++.h>
-#define size 4
+#include<iostream>
 using namespace std;
-int solveMaze(int sR, int sC, int maze[size][size], int soln[size][size])
+int maze[10][10],sol[10][10];
+int s=1;
+
+bool isSafe(int x,int y)
 {
-if ((sR == size - 1) && (sC == size - 1))
-{
-	      soln[sR][sC] = 1;
-	      return 1;
-	 }
-	else
-{
-		soln[sR][sC] = 1;
-		if ((sC < size - 1) && maze[sR][sC + 1] == 1 && solveMaze(sR, sC + 1, maze, soln))
-{
-		      return 1;
-		}
-		if ((sR < size - 1) && maze[sR + 1][sC] == 1 && solveMaze(sR + 1, sC, maze, soln))
-{
-		     return 1;
-		}
-		soln[sR][sC] = 0;
-		return 0;
+    if(x>=0 && x<s && y>=0 && y<s && maze[x][y]==1)
+        return true;
+    return false;
 }
+
+bool solveMaze(int x,int y)
+{
+    if(x==s-1 && y==s-1)
+    {
+        sol[x][y]=1;
+        return true;
+    }
+    if(isSafe(x,y))
+    {
+        sol[x][y]=1;
+        if(solveMaze(x+1,y))
+        {
+            return true;
+        }
+        if(solveMaze(x,y+1))
+        {
+            return true;
+        }
+    }
+    sol[x][y]=0;
+    return false;
 }
 int main()
 {
-	int maze[size][size];
-	    cout<<"Enter the maze values"<<endl;
-	    for (int i = 0; i < size; ++i)
-   {
-	         for (int j = 0; j < size; ++j)
-   	        {
-		cin>>maze[i][j];
-	        }
-	   }
-	  int soln[size][size] = {0};
-  	  int sR = 0;
-	  int sC = 0;
-	  if(solveMaze(sR, sC, maze, soln))
-{
-	        cout<<"Solution is: "<<endl;
-	        for (int i = 0; i < size; ++i)
-       {
-		for (int j = 0; j < size; ++j)
-{
-		     cout << soln[i][j]<<" ";
-		}
-		cout <<endl;
-	       }
-	    }
-	    else
-                 {
-	        cout<<"No Solution"<<endl;
-	    }
-		return 0;
+    int i,j;
+    cout<<"Enter the maze size : ";
+    cin>>s;
+    cout<<"Enter the maze matrix : ";
+    for(i=0;i<s;i++)
+    {
+        for(j=0;j<s;j++)
+        {
+            cin>>maze[i][j];
+            sol[i][j]=0;
+        }
+    }
+    if(solveMaze(0,0))
+    {
+        for(i=0;i<s;i++)
+        {
+            for(j=0;j<s;j++)
+            {
+                cout<<sol[i][j];
+            }
+            cout<<"\n";
+        }
+    }
+    else
+    {
+        cout<<"No solution";
+    }
+    
 }
-/*
-OUTPUT:
-Enter the maze values
-1 0 0 0
-1 1 0 1
-0 1 0 0
-1 1 1 1
-Solution is:
-1 0 0 0
-1 1 0 0
-0 1 0 0
-0 1 1 1
-*/
