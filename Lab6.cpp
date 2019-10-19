@@ -1,22 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
-void displaySubset(int subSet[], int size) 
-{ 
-    cout<<"{";
-    
-    for(int i = 0; i < size; i++)
-    {
-        cout << subSet[i] << ",";
-    }
-    cout<<"}";
-    cout << endl;    
+bool sol = false;
+void displaySubset(int subSet[], int size) {
+        cout<<"{";
+        for(int i = 0; i < size; i++) {
+            cout << subSet[i] << ",";
+        }
+        cout<<"}";
+        cout << endl;
 }
 
 void subsetSum(int set[], int subSet[], int n, int subSize, int total, int nodeCount ,int sum) 
 {
    if( total == sum) 
-   { 
+   {
       displaySubset(subSet, subSize);     
+     sol = true;
       subsetSum(set,subSet,n,subSize-1,total-set[nodeCount],nodeCount+1,sum);     
       return;     
    }
@@ -49,31 +48,9 @@ int main()
     }
     cout<<"Enter the target sum :";
     cin>>target;
-    cout<<"\nSubSets {}"<<endl;
+    cout<<"\nSubSets"<<endl;
     findSubset(weights, size, target);
+    if(sol ==false)
+   cout<<"No subsets";
     return 0; 
-} 
-/*
-OUTPUT:
-Enter no. of weights :5
-Enter weight 1: 10
-Enter weight 2: 5
-Enter weight 3: 15
-Enter weight 4: 7
-Enter weight 5: 20
-Enter the target sum :2 
-
-SubSets { }
-
-Enter no. of weights :5
-Enter weight 1: 10
-Enter weight 2: 7
-Enter weight 3: 5
-Enter weight 4: 15
-Enter weight 5: 20
-Enter the target sum :20
-
-SubSets { }
-{5,15,}
-{20,}
-*/
+}
